@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marks Biotech – Coming Soon</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <!-- LEFT -->
+      <div class="left">
+        <div class="left-border"></div>
+
+        <div class="logo-area">
+          <img src="./images/marks-biotech-logo 1.png" alt="Marks Biotech" />
+        </div>
+
+        <div class="badge">
+          <span class="badge-bar"></span>
+          FUTURE DENTISTRY - TODAY
+        </div>
+
+        <h1>Under<br /><em>Construction.</em></h1>
+
+        <p class="sub">
+          We're working hard to bring you something amazing. Leave your details
+          and we'll notify you when we launch!
+        </p>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="right">
+        <div class="grid-bg"></div>
+        <div class="orb1"></div>
+        <div class="orb2"></div>
+
+        <div class="form-wrap">
+          <div id="formBlock">
+            <div class="form-head">
+              <div class="form-title">Get Notified</div>
+              <p class="form-sub">Be the first to know when we launch.</p>
+            </div>
+
+            <div class="field">
+              <label>Full Name <span class="req">*</span></label>
+              <input type="text" id="fname" placeholder="Name ..." />
+            </div>
+
+            <div class="two-col">
+              <div class="field">
+                <label>Email Address <span class="req">*</span></label>
+                <input type="email" id="femail" placeholder="name@gmail.com" />
+              </div>
+              <div class="field">
+                <label>Phone Number</label>
+                <input type="tel" id="fphone" placeholder="+91 ..... ....." />
+              </div>
+            </div>
+
+            <div class="field">
+              <label
+                >Message
+                <span style="opacity: 0.4; font-weight: 400; letter-spacing: 0"
+                  >(Optional)</span
+                ></label
+              >
+              <textarea
+                id="fmsg"
+                placeholder="Tell us what you're interested in…"
+              ></textarea>
+            </div>
+
+            <button class="btn" onclick="handleSubmit()">
+              <span>Notify Me</span>
+              <span class="arrow">→</span>
+            </button>
+          </div>
+
+          <div class="success-state" id="successBlock">
+            <div class="s-ring">✓</div>
+            <h3>You're on the list!</h3>
+            <p>
+              Thank you — we'll send you an exclusive early-access invite the
+              moment we launch.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      async function handleSubmit() {
+        const btn = document.querySelector(".btn span");
+        const originalText = btn.innerText;
+
+        btn.innerText = "Submitting...";
+
+        const name = document.getElementById("fname").value.trim();
+        const email = document.getElementById("femail").value.trim();
+        const phone = document.getElementById("fphone").value.trim();
+        const message = document.getElementById("fmsg").value.trim();
+
+        if (!name) {
+          shake("fname");
+          btn.innerText = originalText;
+          return;
+        }
+
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          shake("femail");
+          btn.innerText = originalText;
+          return;
+        }
+
+        try {
+          await fetch(
+            "https://script.google.com/macros/s/AKfycbwXXLwRymZ_Pt13-ScA9M3AWkvkrCv4PjUuPmA3t05lwsBNJCRTXsUjpIymqVpVsgd2/exec",
+            {
+              method: "POST",
+              body: JSON.stringify({
+                name: name,
+                email: email,
+                phone: phone,
+                message: message,
+              }),
+            },
+          );
+
+          const fb = document.getElementById("formBlock");
+          fb.style.transition = "opacity 0.3s, transform 0.3s";
+          fb.style.opacity = "0";
+          fb.style.transform = "translateY(-10px)";
+
+          setTimeout(() => {
+            fb.style.display = "none";
+            document.getElementById("successBlock").classList.add("show");
+          }, 320);
+        } catch (err) {
+          alert("Something went wrong. Try again.");
+          btn.innerText = originalText;
+        }
+      }
+
+      function shake(id) {
+        const el = document.getElementById(id);
+        el.style.borderColor = "#D0191A";
+        el.style.boxShadow = "0 0 0 3px rgba(208,25,26,0.2)";
+        el.style.animation = "shakeX 0.4s ease";
+        el.addEventListener("animationend", () => (el.style.animation = ""), {
+          once: true,
+        });
+      }
+
+      const st = document.createElement("style");
+      st.textContent = `@keyframes shakeX{
+    0%,100%{transform:translateX(0)}
+    20%{transform:translateX(-7px)}
+    40%{transform:translateX(7px)}
+    60%{transform:translateX(-4px)}
+    80%{transform:translateX(4px)}
+  }`;
+      document.head.appendChild(st);
+    </script>
+  </body>
+</html>
