@@ -365,6 +365,13 @@ h1 em {
   overflow: hidden;
   transition: color 0.3s, transform 0.2s, box-shadow 0.2s;
 }
+.red-btn {
+  background-color: var(--red);
+  text-decoration: none;
+  color: #fff;
+  width: fit-content;
+  padding: 14px 50px;
+}
 .btn::after {
   content: "";
   position: absolute;
